@@ -131,3 +131,61 @@ class PetRepo extends AdaptableRepo<Pet> {
 
 ---
 
+# Dart's syntax is conducive to building component (or widget) trees
+
+---
+
+```dart
+return Container(
+  child: Column(
+    children: <Widget>[
+      StreamBuilder(
+        key: ValueKey(true),
+        stream: medicationVm.getMedicationsStream(),
+        builder: (BuildContext context, AsyncSnapshot<QuerySnapshot> snapshot) {
+          if (snapshot.hasError) {
+            return new Text('Error: ${snapshot.error}');
+          }
+          switch (snapshot.connectionState) {
+            case ConnectionState.waiting:
+              return new Text('Loading...');
+            default:
+              var entries = snapshot.data.docs
+                .map((e) => Medication().fromFirebaseSnapshotDocument(e))
+                .toList();
+
+              if (entries.isEmpty) {
+                return Padding(
+                  padding: const EdgeInsets.fromLTRB(8.0, 16.0, 8.0, 16.0),
+                  child: Center(
+                    child: Text("No Medications yet! Let's add one with the button below!")
+                  ),
+                );
+              }
+              return ListView.builder(
+                scrollDirection: Axis.vertical,
+                shrinkWrap: true,
+                padding: const EdgeInsets.all(8),
+                itemCount: entries.length,
+                itemBuilder: (BuildContext context, int index) {
+                  return MedicationListItem(
+                    medication: entries[index],
+                    onPressed: () => {
+                        Navigator.pushNamed(context, '/medications/${entries[index].documentID}')
+                    },
+                  );
+               });
+              }
+            },
+          ),
+        ],
+    ));
+```
+
+---
+<!-- _class: lead -->
+# That's a large chunk of Flutter code!
+
+---
+
+![bg left:65%](./images/flutter-docs-architecture.jpg)
