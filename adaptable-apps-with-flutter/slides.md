@@ -187,5 +187,244 @@ return Container(
 # That's a large chunk of Flutter code!
 
 ---
+<!-- _class: lead -->
+# How does Flutter work?
 
-![bg left:65%](./images/flutter-docs-architecture.jpg)
+---
+
+![bg 65%](./images/flutter-docs-architecture.png)
+
+---
+<!-- _class: lead -->
+```dart
+void main() async {
+    runApp(MyApp());
+}
+```
+
+---
+
+<!-- _class: lead -->
+```dart
+class MyApp extends StatelessWidget {
+
+  // This widget is the root of your application.
+  @override
+  Widget build(BuildContext context) {
+    return MultiProvider(
+      providers: [
+        Provider<Box<String>>(create: (ctx) => Hive.box("cache")),
+        ... // DI
+      ],
+      child: MainAppContent()
+    );
+  }
+}
+```
+---
+<!-- _class: lead -->
+```dart
+class MainAppContent extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    
+    var themeService = Provider.of<ThemeService>(context);
+    
+    return MaterialApp(
+        title: 'Luna Journal',
+        theme: themeService.getThemeData(themeService.activeTheme),
+        debugShowCheckedModeBanner: false,
+        initialRoute: '/',
+        onGenerateRoute: (settings) => router
+            .matchRoute(context, settings.name, routeSettings: settings)
+            .route
+    );
+  }
+}
+
+```
+<!-- _class: lead -->
+---
+```dart
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+        appBar: AppBar(
+          title: Text("Medications"),
+          actions: [
+            if (!editMode)
+              Container(
+                padding: EdgeInsets.only(right: 8),
+                child: IconButton(
+                    icon: Icon(FontAwesomeIcons.edit),
+                    onPressed: () => {
+                          setState(() {
+                            editMode = !editMode;
+                          })
+                        }),
+              )
+          ],
+        ),
+        drawer: null,
+        body: editMode ? getEditForm() : getViewContainer());
+  }
+```
+
+---
+
+<!-- _class: lead -->
+# So you put some widgets in a tree
+
+---
+
+# And you get something like this
+
+![bg left:40% 60%](./images/luna-journal-home-ios.png)
+
+---
+# And that looks bad
+![bg left:40% 95%](./images/luna-journal-home-ipad.png)
+
+---
+
+<!-- _class: lead -->
+# So, you open your XCode Project and modify it so that iPad isn't supported.
+
+---
+
+<!-- _class: lead -->
+# Except that's not an option and it doesn't work!
+
+
+---
+
+```dart
+GridView.count(
+    primary: true,
+    shrinkWrap: true,
+    padding: const EdgeInsets.all(10),
+    crossAxisSpacing: 0,
+    mainAxisSpacing: 0,
+    crossAxisCount: 3,
+    children: <Widget>[
+        ... // truncated for brevity
+    ]),
+```
+
+# What a troublemaker!
+
+---
+
+# Introducing the MediaQuery
+
+```dart
+MediaQuery.of(context);
+```
+| Methods | What they return |
+|-------- | -------------|
+| size    | screen size dimensions |
+| devicePixelRatio | number of device pixels per logical pixel |
+| orientation | Portrait or Landscape |
+| textScaleFactor | number of font pixels for each logical pixel |
+| viewInsets | parts of the display that are obscured by system ui like the keyboard  |
+
+---
+
+```dart
+crossAxisCount: MediaQuery.of(context).size.width > 900 ? 5 : 3,
+```
+```dart
+GridView.count(
+    primary: true,
+    shrinkWrap: true,
+    padding: const EdgeInsets.all(10),
+    crossAxisSpacing: 0,
+    mainAxisSpacing: 0,
+    crossAxisCount: MediaQuery.of(context).size.width > 900 ? 5 : 3,
+    children: <Widget>[
+        ... //truncated for brevity
+    ]
+)
+```
+## That's _better_, but we can do more than that.
+![bg left:40% 90%](./images/luna-journal-home-ipad-5row.png)
+
+---
+
+```dart
+Widget build(BuildContext context) {
+    var dialogFactory = DialogFactory(context: context);
+    return Container(
+      padding: const EdgeInsets.all(4),
+      child: Center(
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: <Widget>[
+            IconButton(
+              iconSize: 36,
+              icon: Icon(image, 
+                color: this.disabled ? Theme.of(context).disabledColor : Theme.of(context).colorScheme.onBackground),
+              tooltip: this.tooltip,
+              onPressed: this.disabled ? () {
+                dialogFactory.createDialog( title: SELECT_PET_TITLE, content: SELECT_PET_CONTENT).show();
+              } : this.onPressed,
+            ),
+            Text(this.text, style: TextStyle(
+                fontSize: 16, 
+                color: this.disabled ? Theme.of(context).disabledColor : Theme.of(context).colorScheme.onBackground), 
+                textAlign: TextAlign.center
+            ),
+          ],
+        )
+      ),
+    );
+```
+
+---
+
+```dart
+IconButton(
+    iconSize: 36,
+    ...
+),
+```
+
+```dart
+IconButton(
+    iconSize: MediaQuery.of(context).orientation == Orientation.portrait ?
+                (MediaQuery.of(context).size.aspectRatio * 4) * 20 :
+                (MediaQuery.of(context).size.aspectRatio * 0.8) * 60,
+    ...
+),
+```
+
+---
+
+## Aspect Ratio Tips
+
+- Phones are slimmer than tablets (creating a more extreme ratio)
+- Aspect Ratio changes with Orientation
+- Multiply by a "Weight" to help direct how much influence the aspect ratio actually has. (0.5 to 2 is pretty common)
+
+---
+
+```dart
+Text(this.text, 
+    style: TextStyle(
+        fontSize: 16
+        ...
+        ),
+)
+```
+
+```dart
+var mediaData = MediaQuery.of(context);
+
+Text(this.text, 
+    style: TextStyle(
+        fontSize: 
+            mediaData.textScaleFactor * (mediaData.size.aspectRatio * 1.4) * 16, 
+        ...
+        ),
+)
+```
