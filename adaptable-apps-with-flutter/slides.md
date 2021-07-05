@@ -276,13 +276,25 @@ class MainAppContent extends StatelessWidget {
 # So you put some widgets in a tree
 
 ---
+<!-- _class: lead --->
+# Before we go any further.
 
-# And you get something like this
+# I need you know...
+
+---
+
+<!-- _class: lead -->
+# I am not a designer.
+
+---
+# You get something like this.
+
+## Not too bad for a non-designer.
 
 ![bg left:40% 60%](./images/luna-journal-home-ios.png)
 
 ---
-# And that looks bad
+# And that looks bad regardless of whether I'm a designer or not.
 ![bg left:40% 95%](./images/luna-journal-home-ipad.png)
 
 ---
@@ -293,7 +305,7 @@ class MainAppContent extends StatelessWidget {
 ---
 
 <!-- _class: lead -->
-# Except that's not an option and it doesn't work!
+# Except that's not an option!
 
 
 ---
@@ -422,9 +434,80 @@ var mediaData = MediaQuery.of(context);
 
 Text(this.text, 
     style: TextStyle(
-        fontSize: 
-            mediaData.textScaleFactor * (mediaData.size.aspectRatio * 1.4) * 16, 
-        ...
-        ),
+            fontSize: mediaData.textScaleFactor *
+            (mediaData.size.aspectRatio.clamp(0.8, 1.2)) *
+            16,
+            ...
 )
 ```
+
+---
+
+![bg 94%](./images/dart-clamp.png)
+
+---
+
+# There are other tools like Flex that help with responsive widgets, too.
+
+// TODO: If Im under 60 minutes, add some examples of flex too
+
+---
+
+# We've made our app more responsive, but how do we make it _Adaptive_?
+
+---
+
+- ## Tablets, Laptops and Desktops have tighter (closer to 1) aspect ratios than phones
+    - ### More space to work with
+- ## Watches also have a tigher aspect ratio than phones
+    - ### LESS space to work with.
+
+---
+
+- ## Think about how people use the device you're building for.
+    - ### Most people would prefer to perform heavy-workloads on a desktop or laptop computer.
+    - ### Tablets have become a staple for multi-taskers, artists, and note-takers.
+    - ### I hate typing on a phone. Don't make me do it.
+
+---
+
+![bg 50%](./images/luna-journal-ios-layoutbuilder.png)
+
+![bg 50%](./images/luna-journal-ios-layoutbuilder-select.png)
+
+---
+# Why is pet selection hidden behind a dropdown? 
+
+- Its critical enough to keep on the home screen.
+- I ran out of space.
+
+---
+
+# On Tablet
+
+- Its critical enough to keep on the home screen.
+- I have PLENTY of space.
+
+---
+
+# LayoutBuilder
+
+- A widget
+- The "cream of the crop" for adaptive and responsive layouts
+- Use for building large layouts
+- Use for deciding how small widgets should render
+- [Widget of the Week: Layout Builder](https://www.youtube.com/watch?v=IYDVcriKjsw&feature=emb_title)
+- [Layout Builder Docs](https://api.flutter.dev/flutter/widgets/LayoutBuilder-class.html)
+
+
+---
+
+# Master-Detail View
+
+- List on the left, detail on the right
+
+![bg right:60% 90%](./images/mdv.png)
+
+---
+
+![bg 40%](./images/luna-journal-layoutbuilder-ipad.png)
