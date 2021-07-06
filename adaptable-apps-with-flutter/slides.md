@@ -508,6 +508,67 @@ Text(this.text,
 
 ![bg right:60% 90%](./images/mdv.png)
 
+
+---
+
+```dart
+LayoutBuilder(builder: (context, constraints) {
+    if (constraints.maxWidth > 900) {
+        return Row(
+            crossAxisAlignment: CrossAxisAlignment.stretch,
+            children: [
+                Flexible(
+                    flex: 1,
+                    child: PetCard(),
+                ),
+                Flexible(
+                    flex: 2,
+                    child: getActionGrid(context, petVm, appVm),
+                ),
+            ]
+        );
+    } else {
+        return Column(
+            children: [
+                Container(
+                    height: 110,
+                    child: Center(
+                        child: PetCard(),
+                    )
+                ),
+                Flexible(
+                    flex: 1,
+                    fit: FlexFit.tight,
+                    child: getActionGrid(context, petVm, appVm)
+                )
+            ],
+        );
+    }
+}),
+```
+
+---
+
+# Our grid will grow, but we need to make changes to the pet selection, too.
+
+---
+
+- Completely change the way the component is rendered depending on constraints
+- use a LayoutBuilder and `constraints.maxHeight > 400`
+  - see if the component is being rendered in a box greater than 400 pixels
+  - In this case, see if its rendered in the small box at iphone or the large box on the left for tablet and desktop.
+- [The code for this is actually kind of big, so here's a link (but we'll show a few pieces in a second)](https://gist.github.com/bradcypert/0911c744d8d55280eaf6a69c67a1bcb3)
+
+---
+
+```dart
+if (constraints.maxHeight > 400) {
+    return Column(...);
+} else {
+    return Row(...);
+}
+```
+
 ---
 
 ![bg 40%](./images/luna-journal-layoutbuilder-ipad.png)
