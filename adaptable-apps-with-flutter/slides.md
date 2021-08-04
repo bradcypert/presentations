@@ -449,7 +449,9 @@ Text(this.text,
 
 # There are other tools like Flex that help with responsive widgets, too.
 
-// TODO: If Im under 60 minutes, add some examples of flex too
+- Flex
+- Flexible
+- Expanded
 
 ---
 
@@ -548,6 +550,7 @@ LayoutBuilder(builder: (context, constraints) {
 ```
 
 ---
+<!-- _class: lead -->
 
 # Our grid will grow, but we need to make changes to the pet selection, too.
 
@@ -572,3 +575,185 @@ if (constraints.maxHeight > 400) {
 ---
 
 ![bg 40%](./images/luna-journal-layoutbuilder-ipad.png)
+
+---
+<!-- _class: lead -->
+# So that's a pretty neat adaptive layout. But is that fully adapative?
+
+---
+
+<!-- _class: lead -->
+# What about how data is stored?
+## This was a big deal with Luna Journal for multiple reasons.
+---
+
+<!-- _class: lead -->
+## 1. Cloud Storage (Firebase?)
+## 2. Persistent Device Storage (Sqlite, Hive)
+## 3. Local Storage (shared prefs, local storage)
+
+---
+
+<!-- _class: lead -->
+# Enter the Adapter Pattern!
+---
+
+<!-- _class: lead -->
+
+```dart
+import 'package:luna_journal/traits/mappable.dart';
+
+abstract class DatabaseAdapter<T extends Mappable> {
+  Stream<List<T>> getAll(String ownerId);
+  Stream<T> getById(String id);
+  Future<T> add(T item);
+  Future<void> update(String id, T item);
+  Future<void> delete(String id);
+}
+```
+
+---
+<!-- _class: lead -->
+
+```dart
+  setAdapterCollection(String collectionName) {
+    adapters = {
+      DataAdapter.Local: HiveAdapter<T>(collectionName),
+      DataAdapter.Cloud: FirebaseAdapter<T>(collectionName)
+    };
+  }
+```
+
+---
+
+```dart
+class WeightRepo extends AdaptableRepo<WeightLogItem> {
+
+  static String collectionName = 'weight';
+  final BuildContext context;
+  AuthRepo authRepo;
+  HouseholdRepo householdRepo;
+
+  WeightRepo({this.context}) {
+    this.authRepo = Provider.of<AuthRepo>(this.context, listen: false);
+    this.householdRepo = Provider.of<HouseholdRepo>(this.context, listen: false);
+    this.appSettingsRepo = Provider.of<AppSettingsRepo>(this.context, listen: false);
+    setAdapterCollection(collectionName);
+  }
+
+  Stream<WeightLogItem> getById(String id) => getAdapter().getById(id);
+  Future<WeightLogItem> add(WeightLogItem item) => getAdapter().add(item);
+  Future<void> update(String id, WeightLogItem item) => getAdapter().update(id, item);
+  Future<void> delete(String id) => getAdapter().delete(id);
+  Stream<List<WeightLogItem>> getAsStream(ownerId) => getAdapter().getAll(ownerId);
+}
+```
+
+---
+
+<!-- _class: lead -->
+# Adaptive apps lead to more choice.
+---
+<!-- _class: lead -->
+
+![bg 50%](./images/storage-mechanism.png)
+
+
+---
+
+<!-- _class: lead -->
+# Okay, that makes sense, but back to the UI. Interface expectations can be so vastly different! 😩
+
+---
+
+![bg 90%](./images/ios-dialog.png)
+
+![bg 90%](./images/material-dialog.png)
+
+---
+<!-- _class: lead -->
+
+# Flutter gives you access to both styles and allow you to choose how you want to represent them.
+
+---
+
+## Flutter also adapts some APIs by default: https://flutter.dev/docs/resources/platform-adaptations
+
+- Navigation animations
+- How a user can "go back" to a previous view
+- scroll physics
+- typography (when using flutter/material)
+- iconography
+- and many more
+
+---
+
+![bg 80%](./images/ios-appbar.png)
+
+![bg 80%](./images/material-appbar.png)
+
+
+---
+# What about Web?
+![bg 100%](./images/web-appbar.png)
+
+---
+
+# "Phones, Tablets, and Computers usually serve different purposes for different individuals."
+## - Brad Cypert
+
+---
+
+<!-- _class: lead -->
+# Going Beyond the Layout
+
+---
+
+- Keyboard Shortcuts
+- Swipe Actions
+- Scrollbars
+- Integrations with existing APIs
+  - Local storage
+  - Location APIs
+  - Screen Capture
+  - Microphone / Camera usage
+
+---
+<!-- _class: lead -->
+
+# Flutter gives you the tools to handle these interactions, but have support them yourself.
+
+---
+<!-- _class: lead -->
+
+# That being said, there are a lot of third party packages that provide abstractions over these items.
+
+---
+<!-- _class: lead -->
+
+# Think about the platforms that you're building for and then play around with other apps on those platforms. 
+
+---
+<!-- _class: lead -->
+# What do they do well? 
+
+---
+<!-- _class: lead -->
+
+# What do they do poorly? 
+---
+<!-- _class: lead -->
+
+# What's common between apps on the same platform?
+
+---
+<!-- _class: lead -->
+
+# There are tens of thousands of apps that don't "feel" right. This could be your competitive advantage.
+
+---
+<!-- _class: lead -->
+
+# Questions?
+
+
