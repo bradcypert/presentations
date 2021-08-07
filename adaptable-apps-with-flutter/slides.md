@@ -60,19 +60,21 @@ Flutter is Google's UI toolkit for building beautiful, natively compiled applica
 
 ---
 
-![bg top:10% 45%](./images/stack-overflow-2019-most-popular.png)
+![bg top:10% 40%](./images/stack-overflow-2019-most-popular.png)
 
 --- 
 
 ![bg top:10% 40%](./images/stack-overflow-2019-most-loved.png)
 
 --- 
+<!-- _class: lead -->
 
 # Dart's Claim to Fame
 
 ### In 2013, Google Announced that the Dart VM would be built into chrome, allowing you to write client-side applications in Dart.
 
 ---
+<!-- _class: lead -->
 
 # Dart's Claim to Fame
 
@@ -93,6 +95,7 @@ https://techcrunch.com/2015/03/25/google-will-not-integrate-its-dart-programming
 - Tools for Profiling, Logging, and Debugging
 
 ---
+<!-- _class: lead -->
 
 # Dart is Familiar
 
@@ -131,7 +134,8 @@ class PetRepo extends AdaptableRepo<Pet> {
 
 ---
 
-# Dart's syntax is conducive to building component (or widget) trees
+<!-- _class: lead -->
+# Dart's syntax is conducive to building widget (or component) trees
 
 ---
 
@@ -287,6 +291,8 @@ class MainAppContent extends StatelessWidget {
 # I am not a designer.
 
 ---
+<!-- _class: lead -->
+
 # You get something like this.
 
 ## Not too bad for a non-designer.
@@ -294,6 +300,8 @@ class MainAppContent extends StatelessWidget {
 ![bg left:40% 60%](./images/luna-journal-home-ios.png)
 
 ---
+<!-- _class: lead -->
+
 # And that looks bad regardless of whether I'm a designer or not.
 ![bg left:40% 95%](./images/luna-journal-home-ipad.png)
 
@@ -449,12 +457,12 @@ Text(this.text,
 
 # There are other tools like Flex that help with responsive widgets, too.
 
-- Flex
-- Flexible
-- Expanded
+- ### Flex 💪
+- ### Flexible (indicates that children can flex)
+- ### Expanded
 
 ---
-
+<!-- _class: lead -->
 # We've made our app more responsive, but how do we make it _Adaptive_?
 
 ---
@@ -503,6 +511,7 @@ Text(this.text,
 
 
 ---
+<!-- _class: lead -->
 
 # Master-Detail View
 
@@ -558,11 +567,14 @@ LayoutBuilder(builder: (context, constraints) {
 
 - Completely change the way the component is rendered depending on constraints
 - use a LayoutBuilder and `constraints.maxHeight > 400`
-  - see if the component is being rendered in a box greater than 400 pixels
-  - In this case, see if its rendered in the small box at iphone or the large box on the left for tablet and desktop.
+  - check if the component is being rendered in a box greater than 400 pixels
+  - **Phone**: that box is going to be smaller than 400px given the previous layoutbuilder change.
+  - **Larger Devices**: will be greater than 400px given the previous change.
 - [The code for this is actually kind of big, so here's a link (but we'll show a few pieces in a second)](https://gist.github.com/bradcypert/0911c744d8d55280eaf6a69c67a1bcb3)
 
 ---
+
+<!-- _class: lead -->
 
 ```dart
 if (constraints.maxHeight > 400) {
@@ -694,8 +706,11 @@ class WeightRepo extends AdaptableRepo<WeightLogItem> {
 
 
 ---
+
+
 # What about Web?
-![bg 100%](./images/web-appbar.png)
+## Is this "App Bar" Enough?
+![bg top: 100%](./images/web-appbar.png)
 
 ---
 
@@ -705,7 +720,7 @@ class WeightRepo extends AdaptableRepo<WeightLogItem> {
 ---
 
 <!-- _class: lead -->
-# Going Beyond the Layout
+# More Adaptive Patterns Beyond The Layout
 
 ---
 
@@ -721,7 +736,7 @@ class WeightRepo extends AdaptableRepo<WeightLogItem> {
 ---
 <!-- _class: lead -->
 
-# Flutter gives you the tools to handle these interactions, but have support them yourself.
+# Flutter gives you the tools to handle these interactions, but have to choose to use them.
 
 ---
 <!-- _class: lead -->
@@ -731,7 +746,7 @@ class WeightRepo extends AdaptableRepo<WeightLogItem> {
 ---
 <!-- _class: lead -->
 
-# Think about the platforms that you're building for and then play around with other apps on those platforms. 
+# Think about the platforms that you're building for. Use other apps on those platforms. 
 
 ---
 <!-- _class: lead -->
@@ -744,12 +759,12 @@ class WeightRepo extends AdaptableRepo<WeightLogItem> {
 ---
 <!-- _class: lead -->
 
-# What's common between apps on the same platform?
+# What's common between apps on the same platform? What's intuative given the platform?
 
 ---
 <!-- _class: lead -->
 
-# There are tens of thousands of apps that don't "feel" right. This could be your competitive advantage.
+# There are tens of thousands of apps that don't "feel" right. Adaptive Apps could be your competitive advantage.
 
 ---
 <!-- _class: lead -->
