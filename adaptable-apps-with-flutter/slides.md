@@ -685,7 +685,7 @@ class WeightRepo extends AdaptableRepo<WeightLogItem> {
 ---
 <!-- _class: lead -->
 
-# Flutter gives you access to both styles and allow you to choose how you want to represent them.
+# Flutter gives you access to both styles and allows you to choose how you want to represent them.
 
 ---
 
@@ -759,7 +759,7 @@ class WeightRepo extends AdaptableRepo<WeightLogItem> {
 ---
 <!-- _class: lead -->
 
-# What's common between apps on the same platform? What's intuative given the platform?
+# What's common between apps on the same platform? What's intuitive given the platform?
 
 ---
 <!-- _class: lead -->
