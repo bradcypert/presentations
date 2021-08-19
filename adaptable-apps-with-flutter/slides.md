@@ -56,34 +56,6 @@ Flutter is Google's UI toolkit for building beautiful, natively compiled applica
 
 ---
 
-![bg top:10% 60%](./images/github-octoverse-2019-language-change.png)
-
----
-
-![bg top:10% 40%](./images/stack-overflow-2019-most-popular.png)
-
---- 
-
-![bg top:10% 40%](./images/stack-overflow-2019-most-loved.png)
-
---- 
-<!-- _class: lead -->
-
-# Dart's Claim to Fame
-
-### In 2013, Google Announced that the Dart VM would be built into chrome, allowing you to write client-side applications in Dart.
-
----
-<!-- _class: lead -->
-
-# Dart's Claim to Fame
-
-### In 2015, Google killed that chrome feature.
-
-https://techcrunch.com/2015/03/25/google-will-not-integrate-its-dart-programming-language-into-chrome/
-
----
-
 # What is Dart?
 
 - A "General Purpose" programming language
@@ -137,6 +109,36 @@ class PetRepo extends AdaptableRepo<Pet> {
 <!-- _class: lead -->
 # Dart's syntax is conducive to building widget (or component) trees
 
+
+---
+
+![bg top:10% 60%](./images/github-octoverse-2019-language-change.png)
+
+---
+
+![bg top:10% 40%](./images/stack-overflow-2019-most-popular.png)
+
+--- 
+
+![bg top:10% 40%](./images/stack-overflow-2019-most-loved.png)
+
+--- 
+<!-- _class: lead -->
+
+# Dart's Claim to Fame
+
+### In 2013, Google Announced that the Dart VM would be built into chrome, allowing you to write client-side applications in Dart.
+
+---
+<!-- _class: lead -->
+
+# Dart's Claim to Fame
+
+### In 2015, Google killed that chrome feature.
+
+https://techcrunch.com/2015/03/25/google-will-not-integrate-its-dart-programming-language-into-chrome/
+
+---
 ---
 
 ```dart
@@ -486,6 +488,8 @@ Text(this.text,
 ![bg 50%](./images/luna-journal-ios-layoutbuilder-select.png)
 
 ---
+
+![bg 50% left](./images/luna-journal-ios-layoutbuilder-select.png)
 # Why is pet selection hidden behind a dropdown? 
 
 - Its critical enough to keep on the home screen.
@@ -493,6 +497,7 @@ Text(this.text,
 
 ---
 
+![bg 50% left](./images/luna-journal-ios-layoutbuilder-select.png)
 # On Tablet
 
 - Its critical enough to keep on the home screen.
@@ -772,3 +777,12 @@ class WeightRepo extends AdaptableRepo<WeightLogItem> {
 # Questions?
 
 
+---
+
+<!-- _class: lead -->
+
+# ![height:50](./images/phone.svg) [LunaJournal.app](https://www.LunaJournal.app)
+# ![height:50](./images/globe.svg) [BradCypert.com](https://www.bradcypert.com)
+# ![height:50](./images/twitter.svg) [@bradcypert](https://www.twitter.com/bradcypert)
+# ![height:50](./images/github.svg) [@bradcypert](https://www.github.com/bradcypert)
+## ![height:40](./images/flipchart.svg) [This Talk (github.com/bradcypert/presentations)](https://github.com/bradcypert/presentations/tree/main/adaptable-apps-with-flutterhttps://www.github.com/bradcypert/presentations/)
