@@ -139,8 +139,6 @@ class PetRepo extends AdaptableRepo<Pet> {
 https://techcrunch.com/2015/03/25/google-will-not-integrate-its-dart-programming-language-into-chrome/
 
 ---
----
-
 ```dart
 return Container(
   child: Column(
